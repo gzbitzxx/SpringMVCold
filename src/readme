@@ -1,0 +1,62 @@
+springmvc 是spring中的一个模块。它是控制层的框架，它是一个基于mvc模式的框架
+
+mvc:controller view model
+
+springmvc 入门程序
+	1.导入jar包
+	com.springsource.com.mchange.v2.c3p0-0.9.1.2.jar
+	com.springsource.org.aopalliance-1.0.0.jar
+	com.springsource.org.apache.commons.dbcp-1.2.2.osgi.jar
+	com.springsource.org.apache.commons.logging-1.1.1.jar
+	com.springsource.org.apache.commons.pool-1.5.3.jar
+	com.springsource.org.apache.log4j-1.2.15.jar
+	com.springsource.org.aspectj.weaver-1.6.8.RELEASE.jar
+	mysql-connector-java-5.1.13-bin.jar
+	spring-aop-3.2.0.RELEASE.jar
+	spring-aspects-3.2.0.RELEASE.jar
+	spring-beans-3.2.0.RELEASE.jar
+	spring-context-3.2.0.RELEASE.jar
+	spring-core-3.2.0.RELEASE.jar
+	spring-expression-3.2.0.RELEASE.jar
+	spring-jdbc-3.2.0.RELEASE.jar
+	spring-test-3.2.0.RELEASE.jar
+	spring-tx-3.2.0.RELEASE.jar
+	spring-web-3.2.0.RELEASE.jar
+	spring-webmvc-3.2.0.RELEASE.jar
+	
+	
+	除了spring的核心包之外，还需要导入一个jstl的jar包
+	jstl-1.2.jar
+	2.编写springmvc的配置文件
+	<!-- 处理器映射器 -->
+	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+	<!-- 适配器解析器 -->	
+	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"></bean>
+	<!-- 视图解析器 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	</bean>	
+	3.配置后端的控制器。
+	public class UserController implements Controller
+	4.编写视图
+	<!-- 配置一下后端控制器
+		BeanNameUrlHandlerMapping 是根据后端控制器声明的name作为URL进行映射的。
+	 -->
+	<bean name="/users.action" id="userController" class="com.hk.controller.UserController"/>
+	5.配置中央调度器
+	中央调度器的任务就是处理一切来的请求，springmvc已经提供了一个现成的中央调度器
+	这个调度器只是一个普通的servlet
+	在web.xml中
+	<servlet>
+  	<servlet-name>springmvc</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  	<!-- 注入一些初始化的参数 -->
+	  	<init-param>
+	  		<param-name>contextConfigLocation</param-name>
+	  		<param-value>classpath:springmvc.xml</param-value>
+	  	</init-param>
+	  </servlet>
+	  <servlet-mapping>
+	  	<servlet-name>springmvc</servlet-name>
+	  	<url-pattern>*.action</url-pattern>
+	  </servlet-mapping>
+	
